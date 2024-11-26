@@ -24,11 +24,23 @@ export type TInitialItems = ItemType[];
     },
   ];
 
- export const secondaryButtons: string[] = [
-    "Mark all as complete",
-    "Mark all as incomplete",
-    "Reset to initial",
-    "Remove all items"
-  ];
+ export const secondaryButtons = [
+   {
+     text: "Mark all as complete",
+     onClick: "handleMarkAllAsCompleted",
+   },
+   {
+     text: "Mark all as incomplete",
+     onClick: "handleMarkAllAsInCompleted",
+   },
+   {
+     text: "Remove all items",
+     onClick: "handleRemoveAllItems",
+   },
+   {
+     text: "Reset to initial",
+     onClick: "handleResetToInitial",
+   },
+ ];
 
   

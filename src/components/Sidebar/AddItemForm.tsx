@@ -1,13 +1,12 @@
-import { ChangeEvent, Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import Button from "../Button";
-import { TInitialItems, ItemType } from "../../lib/constants";
 
 interface IAddItemForm {
-  setItems: Dispatch<SetStateAction<TInitialItems>>
+  onAddItems: (itemText: string) => void;
 }
 
 
-const AddItemForm : React.FC<IAddItemForm> = ({ setItems }) => {
+const AddItemForm : React.FC<IAddItemForm> = ({ onAddItems }) => {
   const [itemText, setItemText] = useState<string>("");
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -25,12 +24,9 @@ const AddItemForm : React.FC<IAddItemForm> = ({ setItems }) => {
       return  // permet de stopper la function AddItemForm et empecher le block de continuer
     }
 
-    const newItem: ItemType = { 
-      id: new Date().getTime(),  
-      name: itemText, 
-      packed: false, }; 
-      setItems((prevItems) => [...prevItems, newItem]); 
-      setItemText(""); 
+
+    onAddItems(itemText)
+    setItemText(""); 
   }
 
   return (
@@ -42,7 +38,7 @@ const AddItemForm : React.FC<IAddItemForm> = ({ setItems }) => {
           onChange={handleChange}
           autoFocus={true} 
         />
-        <Button type="secondary"> Add to list</Button>
+        <Button buttonType="secondary" > Add to list</Button>
 
     </form>
   )

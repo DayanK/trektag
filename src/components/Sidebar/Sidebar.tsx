@@ -1,18 +1,27 @@
-import { Dispatch, SetStateAction } from "react";
 import AddItemForm from "./AddItemForm";
 import ButtonGroup from "./ButtonGroup";
-import { TInitialItems } from "../../lib/constants";
 
 interface ISidebarProps {
-  setItems: Dispatch<SetStateAction<TInitialItems>>
+  handleAddItems: (itemText: string) => void;
+  
+  handleRemoveAllItems: () => void;
+  handleResetToInitial: () => void;
+  handleMarkAllAsCompleted: () => void;
+  handleMarkAllAsInCompleted: () => void
 }
 
-const Sidebar: React.FC<ISidebarProps> = ({ setItems }) => {
+const Sidebar: React.FC<ISidebarProps> = ({ handleAddItems,  handleMarkAllAsCompleted, handleResetToInitial,handleRemoveAllItems, handleMarkAllAsInCompleted}) => {
   return (
     <div className="sidebar">
-      <AddItemForm setItems={setItems} />
+      <AddItemForm onAddItems={handleAddItems} />
 
-      <ButtonGroup />
+      <ButtonGroup 
+        handleAddItems={handleAddItems}
+        handleMarkAllAsCompleted= {handleMarkAllAsCompleted}
+        handleMarkAllAsInCompleted= {handleMarkAllAsInCompleted}
+        handleRemoveAllItems= {handleRemoveAllItems}
+        handleResetToInitial= {handleResetToInitial}
+      />
     </div>
   );
 };
