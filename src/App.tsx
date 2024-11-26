@@ -70,6 +70,8 @@ function App() {
     console.log("Marked all as incomplete: ", newItems);
   };
 
+  const totalNumberOfItems = items.length;
+  const numberOfItemsPacked = items.filter((item) => item.packed).length;
 
 
 
@@ -78,7 +80,10 @@ function App() {
       <BackgroundHeading />
 
       <main>
-        <Header />
+        <Header
+          numberOfItemsPacked={numberOfItemsPacked}
+          totalNumberOfItems={totalNumberOfItems} 
+          />
         <ItemList
           items={items}
           handleDeleteItems={handleDeleteItems}

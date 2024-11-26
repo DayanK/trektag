@@ -1,9 +1,15 @@
 
-
-const Counter = () => {
-  return (
-    <p> <b>1</b> / 3 items packed</p>
-  )
+interface CounterProps {
+  totalNumberOfItems: number;
+  numberOfItemsPacked: number;
 }
+
+const Counter: React.FC<CounterProps> = ({ numberOfItemsPacked, totalNumberOfItems }) => {
+  return (
+    <p>
+      <b>{numberOfItemsPacked} </b> / {totalNumberOfItems} packed
+    </p>
+  );
+};
 
 export default Counter

@@ -1,13 +1,24 @@
 import Logo from './Logo';
 import Counter from './Counter';
 
-const Header = () => {
+interface HeaderProps {
+  totalNumberOfItems: number;
+  numberOfItemsPacked: number;
+}
+
+const Header: React.FC<HeaderProps> = ({
+  totalNumberOfItems,
+  numberOfItemsPacked,
+}) => {
   return (
     <header>
-        <Logo />
-        <Counter />
+      <Logo />
+      <Counter
+        totalNumberOfItems={totalNumberOfItems}
+        numberOfItemsPacked={numberOfItemsPacked}
+      />
     </header>
-  )
-}
+  );
+};
 
 export default Header
