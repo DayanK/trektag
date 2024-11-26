@@ -3,7 +3,7 @@ import Item from "./Item";
 import { TInitialItems } from "../../lib/constants";
 import { EmptyView } from "./EmptyView";
 import Select from "react-select";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 interface ItemListProps {
   items: TInitialItems;
@@ -22,7 +22,9 @@ const ItemList: React.FC<ItemListProps> = ({ items, handleDeleteItems, handleToo
 
   const [sortBy, setSortBy] = useState<string |undefined>("default");
 
-  const sortedItems =[...items].sort((a,b)=> {
+
+  // Include useMemo() hook for the performance optimization
+  const sortedItems = useMemo(() => [...items].sort((a,b) => {
     if(sortBy ==='packed'){
       return Number(b.packed) - Number(a.packed)
     }
@@ -33,7 +35,7 @@ const ItemList: React.FC<ItemListProps> = ({ items, handleDeleteItems, handleToo
 
     return 0;
     
-  })
+  }), [items, sortBy])
 
   return (
     <ul className="item-list">
