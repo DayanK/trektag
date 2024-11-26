@@ -9,9 +9,6 @@ interface ItemsContextProviderProps {
 }
 
 
-// // Create the context with a default value 
-// export const ItemsContext = createContext<ItemsContextType| undefined>(undefined);
-
 export const ItemsContextProvider: React.FC<ItemsContextProviderProps> = ({ children}) => {
   const [items, setItems] = useState<ItemType[]>(()=> JSON.parse(localStorage.getItem('items') || '[]') as ItemType[]|| initialItems);
 
@@ -74,10 +71,6 @@ export const ItemsContextProvider: React.FC<ItemsContextProviderProps> = ({ chil
     setItems(newItems);
     console.log("Marked all as incomplete: ", newItems);
   };
-
-//   const totalNumberOfItems = items.length;
-//   const numberOfItemsPacked = items.filter((item) => item.packed).length;
-
 
   useEffect(() => {
     localStorage.setItem("items", JSON.stringify(items));

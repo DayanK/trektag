@@ -3,7 +3,7 @@ import Item from "./Item";
 import { EmptyView } from "./EmptyView";
 import Select from "react-select";
 import {  useMemo, useState } from "react";
-import { useItemsContext } from "../../lib/hooks";
+import { useItemsStore } from "../../stores/itemsStore";
 
 
 const sortingOptions = [
@@ -14,10 +14,10 @@ const sortingOptions = [
 
 const ItemList : React.FC = () => {
 
- 
+  const items = useItemsStore((state)=> state.items);
+  const deleteItem = useItemsStore((state) => state.deleteItem);
+  const toggleItem = useItemsStore((state) => state.toggleItem);
 
-// Consume the context 
-  const { items, handleDeleteItems, handleToggleItems } = useItemsContext();
   const [sortBy, setSortBy] = useState<string |undefined>("default");
 
 
@@ -51,8 +51,8 @@ const ItemList : React.FC = () => {
           <Item
             key={item.id}
             item={item}
-            handleDeleteItems={handleDeleteItems}
-            handleToogleItems={handleToggleItems}
+            handleDeleteItems={deleteItem}
+            handleToogleItems={toggleItem}
           />
         );
       })}
