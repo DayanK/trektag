@@ -1,16 +1,10 @@
 import Item from "./Item";
 
-import { TInitialItems } from "../../lib/constants";
 import { EmptyView } from "./EmptyView";
 import Select from "react-select";
-import { useMemo, useState } from "react";
+import {  useMemo, useState } from "react";
+import { useItemsContext } from "../../lib/hooks";
 
-interface ItemListProps {
-  items: TInitialItems;
-  handleDeleteItems: (id: number) => void;
-  handleToogleItems : (id: number) => void;
-
-}
 
 const sortingOptions = [
   { label: 'Sort by default', value: 'default' },
@@ -18,24 +12,25 @@ const sortingOptions = [
   { label: 'Sort by unpacked', value: 'unpacked' },
 ]
 
-const ItemList: React.FC<ItemListProps> = ({ items, handleDeleteItems, handleToogleItems }) => {
+const ItemList : React.FC = () => {
 
+ 
+
+// Consume the context 
+  const { items, handleDeleteItems, handleToggleItems } = useItemsContext();
   const [sortBy, setSortBy] = useState<string |undefined>("default");
 
 
   // Include useMemo() hook for the performance optimization
-  const sortedItems = useMemo(() => [...items].sort((a,b) => {
-    if(sortBy ==='packed'){
-      return Number(b.packed) - Number(a.packed)
-    }
+  const sortedItems = useMemo(() => {
+    if (!sortBy) return items;
 
-    if(sortBy ==='unpacked'){
-      return Number(a.packed) - Number(b.packed);
-    }
-
-    return 0;
-    
-  }), [items, sortBy])
+    return [...items].sort((a, b) => {
+      if (sortBy === "packed") return Number(b.packed) - Number(a.packed);
+      if (sortBy === "unpacked") return Number(a.packed) - Number(b.packed);
+      return 0;
+    });
+  }, [items, sortBy]);
 
   return (
     <ul className="item-list">
@@ -57,7 +52,7 @@ const ItemList: React.FC<ItemListProps> = ({ items, handleDeleteItems, handleToo
             key={item.id}
             item={item}
             handleDeleteItems={handleDeleteItems}
-            handleToogleItems={handleToogleItems}
+            handleToogleItems={handleToggleItems}
           />
         );
       })}

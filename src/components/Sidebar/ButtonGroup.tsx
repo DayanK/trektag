@@ -1,23 +1,14 @@
-// import { secondaryButtons } from "../../lib/constants";
 import Button from "../Button";
+import { ItemsContext } from "../../lib/ItemsContext";
+import { useItemsContext } from "../../lib/hooks";
+ItemsContext
+
+const ButtonGroup = () => {
+  
+
+  const {  handleMarkAllAsCompleted, handleMarkAllAsInCompleted, handleRemoveAllItems, handleResetToInitial } = useItemsContext();
 
 
-interface IButtGroupProps {
-  handleAddItems: (itemText: string) => void; 
-  handleMarkAllAsCompleted: () => void; 
-  handleMarkAllAsInCompleted: () => void; 
-  handleResetToInitial: () => void; 
-  handleRemoveAllItems: () => void;
-}
-
-
-
-const ButtonGroup: React.FC<IButtGroupProps> = ({
-  handleMarkAllAsCompleted,
-  handleMarkAllAsInCompleted,
-  handleRemoveAllItems,
-  handleResetToInitial,
-}) => {
   const secondaryButtons = [
     {
       text: "Mark all as complete",

@@ -1,26 +1,17 @@
 import AddItemForm from "./AddItemForm";
 import ButtonGroup from "./ButtonGroup";
+import { useItemsContext } from "../../lib/hooks";
 
-interface ISidebarProps {
-  handleAddItems: (itemText: string) => void;
-  
-  handleRemoveAllItems: () => void;
-  handleResetToInitial: () => void;
-  handleMarkAllAsCompleted: () => void;
-  handleMarkAllAsInCompleted: () => void
-}
 
-const Sidebar: React.FC<ISidebarProps> = ({ handleAddItems,  handleMarkAllAsCompleted, handleResetToInitial,handleRemoveAllItems, handleMarkAllAsInCompleted}) => {
+const Sidebar = () => {
+  const { handleAddItems } = useItemsContext();
+
   return (
     <div className="sidebar">
-      <AddItemForm onAddItems={handleAddItems} />
+      <AddItemForm  onAddItems={handleAddItems}/>
 
       <ButtonGroup 
-        handleAddItems={handleAddItems}
-        handleMarkAllAsCompleted= {handleMarkAllAsCompleted}
-        handleMarkAllAsInCompleted= {handleMarkAllAsInCompleted}
-        handleRemoveAllItems= {handleRemoveAllItems}
-        handleResetToInitial= {handleResetToInitial}
+       
       />
     </div>
   );

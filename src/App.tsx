@@ -1,84 +1,13 @@
-import { useEffect, useState } from "react";
 import BackgroundHeading from "./components/BackgroundHeading";
 import Footer from "./components/Footer";
 import Header from "./components/Header/Header";
 import ItemList from "./components/ItemsList/ItemList";
 import Sidebar from "./components/Sidebar/Sidebar";
-import { initialItems, ItemType, TInitialItems } from "./lib/constants";
+import { ItemsContextProvider } from "./Context/ItemsContextProvider";
 
 function App() {
-  // const itemsFromLocalStorage = JSON.parse(localStorage.getItem('items') || '[]') as ItemType[];
-  // const [items, setItems] = useState<ItemType[]>(itemsFromLocalStorage || initialItems);
-  const [items, setItems] = useState<ItemType[]>(()=> JSON.parse(localStorage.getItem('items') || '[]') as ItemType[]|| initialItems);
-
-  const handleAddItems = (newItemText: string ) => {
-    
-    const newItem: ItemType = { 
-      id: new Date().getTime(),  
-      name: newItemText, 
-      packed: false
-    };
-
-    const newItems = [...items, newItem];
-    setItems(newItems)
-
-  };
-
-  const handleDeleteItems = (id: number) => {
-    const newItems = items.filter((item) => item.id !== id);
-    setItems(newItems)
-  }
-
-  const handleToogleItems = (id:number) => {
-
-    const newItems = items.map((item) => {
-
-        if(item.id === id){
-          return {...item, packed: !item.packed};
-        }
-
-        return item
-
-    });
-
-    setItems(newItems)
-  }
 
 
-  const handleRemoveAllItems = () => {
-    setItems([]);
-  };
-
-  const handleResetToInitial = () => {
-    setItems(initialItems)
-  };
-
-  const handleMarkAllAsCompleted  = () => {
-    const newItems : TInitialItems = items.map((item) =>{
-       return {...item, packed: true}
-    });
-    console.log(newItems)
-
-
-    setItems(newItems);
-  }
-
-  const handleMarkAllAsInCompleted = () => {
-    const newItems: TInitialItems = items.map((item) => {
-      return { ...item, packed: false };
-    });
-
-    setItems(newItems);
-    console.log("Marked all as incomplete: ", newItems);
-  };
-
-  const totalNumberOfItems = items.length;
-  const numberOfItemsPacked = items.filter((item) => item.packed).length;
-
-
-  useEffect(() => {
-    localStorage.setItem("items", JSON.stringify(items));
-  }, [items]);
 
 
 
@@ -87,22 +16,11 @@ function App() {
       <BackgroundHeading />
 
       <main>
-        <Header
-          numberOfItemsPacked={numberOfItemsPacked}
-          totalNumberOfItems={totalNumberOfItems} 
-          />
-        <ItemList
-          items={items}
-          handleDeleteItems={handleDeleteItems}
-          handleToogleItems={handleToogleItems}
-        />
-        <Sidebar
-          handleAddItems={handleAddItems}
-          handleMarkAllAsCompleted={handleMarkAllAsCompleted}
-          handleMarkAllAsInCompleted={handleMarkAllAsInCompleted}
-          handleResetToInitial={handleResetToInitial}
-          handleRemoveAllItems={handleRemoveAllItems}
-        />
+        <ItemsContextProvider>
+          <Header/>
+          <ItemList/>
+          <Sidebar />
+        </ItemsContextProvider>
       </main>
 
       <Footer />

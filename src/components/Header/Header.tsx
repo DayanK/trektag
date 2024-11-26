@@ -1,24 +1,22 @@
-import Logo from './Logo';
-import Counter from './Counter';
+import Logo from "./Logo";
+import Counter from "./Counter";
+import { ItemsContext } from "../../lib/ItemsContext";
+import { useItemsContext } from "../../lib/hooks";
+ItemsContext
 
-interface HeaderProps {
-  totalNumberOfItems: number;
-  numberOfItemsPacked: number;
-}
+const Header = () => {
+ 
+  const { items } = useItemsContext();
 
-const Header: React.FC<HeaderProps> = ({
-  totalNumberOfItems,
-  numberOfItemsPacked,
-}) => {
   return (
     <header>
       <Logo />
       <Counter
-        totalNumberOfItems={totalNumberOfItems}
-        numberOfItemsPacked={numberOfItemsPacked}
+        totalNumberOfItems={items.filter((item) => item.packed).length}
+        numberOfItemsPacked={items.length}
       />
     </header>
   );
 };
 
-export default Header
+export default Header;
