@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BackgroundHeading from "./components/BackgroundHeading";
 import Footer from "./components/Footer";
 import Header from "./components/Header/Header";
@@ -7,7 +7,9 @@ import Sidebar from "./components/Sidebar/Sidebar";
 import { initialItems, ItemType, TInitialItems } from "./lib/constants";
 
 function App() {
-  const [items, setItems] = useState<ItemType[]>(initialItems);
+  // const itemsFromLocalStorage = JSON.parse(localStorage.getItem('items') || '[]') as ItemType[];
+  // const [items, setItems] = useState<ItemType[]>(itemsFromLocalStorage || initialItems);
+  const [items, setItems] = useState<ItemType[]>(()=> JSON.parse(localStorage.getItem('items') || '[]') as ItemType[]|| initialItems);
 
   const handleAddItems = (newItemText: string ) => {
     
@@ -72,6 +74,11 @@ function App() {
 
   const totalNumberOfItems = items.length;
   const numberOfItemsPacked = items.filter((item) => item.packed).length;
+
+
+  useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
 
 
 
